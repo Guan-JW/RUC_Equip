@@ -18,7 +18,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-![img](file:///C:\Users\Thinkpad\AppData\Local\Temp\ksohtml6736\wps1.jpg) 
+![save.jpg](https://github.com/Guan-JW/RUC_Equip/blob/main/pics/save.jpg?raw=true)
 
 **4）** 进入http://127.0.0.1:8000/homepage 到达本系统主页。
 
