@@ -1,0 +1,200 @@
+{% load static %}
+<!--static/js/stepBar-->
+<!--static/js/dialog-->
+<!--static/css/dialog.css-->
+<!--static/js/fullcalendar-->
+<!--static/js/jquery-icheck/skins/all.css-->
+<!--static/js/global-plugins.js-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>学生首页</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{%static 'css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{%static 'css/bootstrap-responsive.min.css' %}" />
+<link rel="stylesheet" href="{%static 'css/matrix-style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/matrix-media.css' %}" />
+<link href="{%static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{%static 'css/jquery.gritter.css' %}" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">MatAdmin</a></h1>
+</div>
+<!--close-Header-part-->
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎Admin</span><b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="/stu_personal/"><i class="icon-user"></i> 我的资料</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout/"><i class="icon-key"></i> 退出</a></li>
+      </ul>
+    </li>
+<!--    <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">消息</span> <span class="label label-important">5</span> <b class="caret"></b></a>-->
+<!--      <ul class="dropdown-menu">-->
+<!--        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> 新消息</a></li>-->
+<!--        <li class="divider"></li>-->
+<!--        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> 收件箱</a></li>-->
+<!--        <li class="divider"></li>-->
+<!--        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> 发件箱</a></li>-->
+<!--        <li class="divider"></li>-->
+<!--        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> 发送</a></li>-->
+<!--      </ul>-->
+<!--    </li>-->
+<!--    <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>-->
+    <li class=""><a title="" href="/logout/"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+  </ul>
+</div>
+<!--close-top-Header-menu-->
+
+<!--sidebar-menu-->
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> 控制台</a>
+  <ul>
+    <li class="active"><a href="#"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+<!--    <li> <a href="/groups/"><i class="icon icon-inbox"></i> <span>我的课题组</span></a> </li>-->
+    <li><a href="/stu_query_instru/"><i class="icon icon-th"></i> <span>仪器预约 & 查询</span></a></li>
+    <li><a href="/reservation_log/"><i class="icon icon-th-list"></i> <span>预约记录</span> </a></li>
+    <li><a href="/logs/"><i class="icon icon-pencil"></i> <span>实验日志</span></a></li>
+  </ul>
+</div>
+<!--sidebar-menu-->
+
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+  </div>
+<!--End-breadcrumbs-->
+
+<!--Action boxes-->
+  <div class="container-fluid">
+    <div class="quick-actions_homepage">
+      <ul class="quick-actions">
+<!--        <li class="bg_lb"> <a href="/groups/"> <i class="icon-inbox"></i> 我的课题组 </a> </li>-->
+        <li class="bg_lb"> <a href="/stu_query_instru/"> <i class="icon-calendar"></i> 仪器查询 & 预约</a> </li>
+        {% if lab_num > 0 %}
+        <li class="bg_lo"> <a href="/reservation_log/"> <i class="icon-th-list"></i><span class="label label-important"> {{lab_num}} </span> 预约记录</a> </li>
+        {% else %}
+        <li class="bg_lo"> <a href="/reservation_log/"> <i class="icon-th-list"></i> 预约记录</a> </li>
+        {% endif %}
+        {% if unfinished_log_num > 0 %}
+        <li class="bg_ly"> <a href="/logs/"> <i class="icon-pencil"><span class="label label-important"> {{unfinished_log_num}} </span></i>实验日志</a> </li>
+        {% else %}
+        <li class="bg_ly"> <a href="/logs/"> <i class="icon-pencil"></i>实验日志</a> </li>
+        {% endif %}
+      </ul>
+    </div>
+
+<!--End-Action boxes-->
+
+    <div class="row-fluid">
+      {% if len %}
+      <div class="span5">
+        <div class="widget-box collapsible">
+          {% for sc in courses_stu %}
+            <div class="widget-title"> <a data-toggle="collapse" href="#collapseOne"> <span class="icon"><i class="icon-magnet"></i></span>
+              <h5 style="color:black;">{{sc.name}}</h5>
+              </a> </div>
+            <div id="collapseOne" class="collapse in">
+              <ul class="recent-posts">
+                <li>
+                <div class="user-thumb"> <img width="100" height="100" alt="User" src="{%static 'img/demo/av1.jpg'%}"> </div>
+                <div class="article-post">
+                  <div class="fr"><a class="btn btn-primary btn-mini" id="course" course_id = "{{sc.id}}">查看详情</a> </div>
+                  <p > 课题组编号：{{sc.id}} </p>
+                  <p > 课题组描述：{{sc.details}}</p>
+                </div>
+                </li>
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      <div class="span5">
+        <div class="widget-box">
+          <div class="widget-title bg_lo"  data-toggle="collapse" href="#collapseG3" > <span class="icon"> <i class="icon-chevron-down"></i> </span>
+            <h5>最新发布</h5>
+          </div>
+          <div class="widget-content nopadding collapse in" id="collapseG2">
+          <ul class="recent-posts">
+            <li>
+              <div class="user-thumb"> <img width="40" height="40" alt="User" src="/static/img/demo/av1.jpg"> </div>
+              <div class="article-post"> <span class="user-info"> By: Kiki / Date: 2 Aug 2012 / Time:09:27 AM </span>
+                <p><a href="#">本系统是由中国人民大学信息学院本科学生制作，用于高校大型仪器预约管理的平台。</a> </p>
+              </div>
+            </li>
+            <li>
+              <div class="user-thumb"> <img width="40" height="40" alt="User" src="/static/img/demo/av2.jpg"> </div>
+              <div class="article-post"> <span class="user-info"> By: Guan / Date: 2 Aug 2012 / Time:09:27 AM </span>
+                <p><a href="#">[仪器地址变更] 仪器编号为1001的粒子分析仪已从理工配楼1101移出，变更后位置为理工配楼1104.</a> </p>
+              </div>
+            </li>
+            <li>
+              <div class="user-thumb"> <img width="40" height="40" alt="User" src="/static/img/demo/av4.jpg"> </div>
+              <div class="article-post"> <span class="user-info"> By: He QR / Date: 2 Aug 2012 / Time:09:27 AM </span>
+                <p><a href="#">若出现系统错误，请各位用户及时指正。谢谢支持。</a> </p>
+              </div>
+            <li>
+              <button class="btn btn-warning btn-mini">View All</button>
+            </li>
+          </ul>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--end-main-container-part-->
+
+<script src="{%static 'js/jquery.min.js'%}"></script>
+<script src="{%static 'js/jquery.ui.custom.js'%}"></script>
+<script src="{%static 'js/bootstrap.min.js'%}"></script>
+<script src="{%static 'js/matrix.js'%}"></script>
+<script src="{%static 'js/matrix.dashboard.js'%}"></script>
+<script src="{%static 'js/jquery.uniform.js'%}"></script>
+<script src="{%static 'js/select2.min.js'%}"></script>
+<script src="{%static 'js/matrix.tables.js'%}"></script>
+
+<script type="text/javascript">
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  function goPage (newURL) {
+
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();
+          }
+          // else, send page to designated URL
+          else {
+            document.location.href = newURL;
+          }
+      }
+  }
+
+// resets the menu selection upon entry to this page:
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+</script>
+<!--点击查看详情跳转到课题组详情界面-->
+<script>
+  $("#course.btn").click(function(){
+    url = "/stu_Group?course_id=" + $(this).attr("course_id");
+    window.location.href = url;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+def TeacherPersonal(request):
+    userid = request.session['user']
+    cursor = connections['default'].cursor()
+    sql_teacher = "select * from teacher where userid = %s"
+    param =(userid)
+    print(userid)
+    cursor.execute(sql_teacher, param)
+
+    raw = dictfetchall(cursor)
+    context = {}
+    context['userid'] = raw[0]['userid']
+    context['name'] = raw[0]['name']
+    context['course_id'] = raw[0]['course_id']
+    context['title_type'] = raw[0]['title_type']
+    context['gender'] = raw[0]['gender']
+    context['email'] = raw[0]['email']
+
+    if request.method == "POST":
+        old_pwd = request.POST.get("old_password", None)
+        new_pwd = request.POST.get("new_password", None)
+        check_pwd = request.POST.get("check_password", None)
+
+        if request.session['user']:
+            if old_pwd != request.session['password']:
+                return HttpResponse('密码验证失败，请重试！')
+
+            if new_pwd and new_pwd == check_pwd:
+                sql_change = "update user set password = %s where user.userid= %s "
+                param = (new_pwd,userid)
+                cursor.execute(sql_change,param)
+                return redirect('/Login/',context={'密码已修改，请重试'})
+    return render(request, 'teacher/personal.html', context)

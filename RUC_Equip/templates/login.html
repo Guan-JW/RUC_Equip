@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--表示本网页是英文网页-en表示English，中文则使用zh-->
+
+<head>
+        {% load static %}
+        <title>登录页面</title>
+		<meta charset="UTF-8" />
+        <meta charset="UTF-8">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--字符集-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--全屏-->
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap-login.min.css' %}" type="text/css"  />
+		<link rel="stylesheet" href="{% static 'css/bootstrap-responsive-login.min.css' %} " type="text/css"/>
+        <link rel="stylesheet" href="{% static 'css/matrix-login.css'%}" type="text/css"/>
+        <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" type='text/css' />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'/>
+
+    <!--引用的样式表-->
+
+    <style type="text/css">
+            body{background:url("/static/images/logo.jpg");}.box{background:#942E2E;}
+        </style>
+</head>
+    <body>
+        <div id="loginbox">
+            <form id="loginform" class="form-vertical" action="/Login/" method="post">
+				 <div class="control-group normal_text"> <h3><img src="/static/img/login.png" alt="Login" /></h3></div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="账号" name="userid" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" placeholder="密码" name="password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                   <span class="left"><a href="/register" class="flip-link btn btn-info" id="to-recover">注册新账号</a></span>
+                    <span class="pull-right"><button type="submit" class="btn btn-success" >  登录  </button></span>
+                </div>
+            </form>
+
+        </div>
+
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/matrix.login.js"></script>
+    </body>
+
+</html>

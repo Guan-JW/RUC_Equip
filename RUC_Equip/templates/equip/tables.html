@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>我管理的仪器</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/css/select2.css" />
+<link rel="stylesheet" href="/static/css/matrix-style.css" />
+<link rel="stylesheet" href="/static/css/matrix-media.css" />
+<link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">仪器管理员</a></h1>
+</div>
+<!--close-Header-part-->
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">仪器管理员</span><b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="/equip/personal"><i class="icon-user"></i> 我的资料</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout"><i class="icon-key"></i> 退出</a></li>
+      </ul>
+    </li>
+    <li class=""><a title="" href="/logout"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+  </ul>
+</div>
+
+<!--sidebar-menu-->
+
+<div id="sidebar"> <a href="#" class="visible-phone"><i class="icon icon-th"></i>我管理的仪器</a>
+  <ul>
+    <li ><a href="/equip/index"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+    <li> <a href="/equip/widgets"><i class="icon icon-inbox"></i> <span>预约审批</span></a> </li>
+    <li class="active"><a href="/equip/tables"><i class="icon icon-th"></i> <span>我管理的仪器</span></a></li>
+    <li ><a href="/equip/log"><i class="icon icon-th-list"></i> <span>仪器使用日志</span></a> </li>
+    <li><a href="/equip/query"><i class="icon icon-search"></i> <span>仪器查询</span></a></li>
+  </ul>
+</div>
+
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/equip/index" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">我管理的仪器</a> </div>
+    <h1>我管理的仪器</h1>
+  </div>
+  <div class="container-fluid">
+    <hr>
+
+    <!--故障仪器-->
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>故障仪器</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>编号</th>
+                  <th>型号规格</th>
+                  <th>存放地点</th>
+                  <th>处理结果</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for e in breakdown %}
+                <tr>
+                  <td class="taskStatus">{{e.equip_name}}</td>
+                  <td class="taskStatus">{{e.equip_id}}</td>                 
+                  <td class="taskStatus">{{e.type}}</td>
+                  <td class="taskStatus">{{e.address}}</td>
+                  <td class="taskStatus">
+                    <button type="button" class="btn btn-success btn-mini btn-repair" onclick="a()" equip_id="{{e.equip_id}}">已修复</button>
+                    <button type="button" class="btn btn-danger btn-mini btn-scrap" equip_id="{{e.equip_id}}">报废</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--仪器清单-->
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>仪器清单</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                  <th class="taskStatus">名称</th>
+                  <th class="taskStatus">编号</th>
+                  <th class="taskStatus">型号规格</th>
+                  <th class="taskStatus">存放地点</th>
+                  <th>仪器状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for e in equip %}
+                <tr>
+                  <td class="taskStatus">{{e.equip_name}}</td>
+                  <td class="taskStatus"><a href="#equip-detail" class="show-detail" equip_id="{{e.equip_id}}" style="color: blue">{{e.equip_id}}</a></td>
+                  <!--td class="taskStatus"><button type="button" id="show-detail" equip_id = "{{e.equip_id}}" style = "color: blue">{{e.equip_id}}</a></td-->
+                  <td class="taskStatus">{{e.type}}</td>
+                  <td class="taskStatus">{{e.address}}</td>
+                  <td class="taskStatus">
+                    {{e.status}}
+                    <button type="button" class="btn btn-danger btn-mini btn-breakdown" equip_id="{{e.equip_id}}" status="{{e.status}}">故障</button>
+                  </td>              
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--更新仪器信息-->
+    <div class="row-fluid">
+      <!--查看仪器详情-->
+      <div class="span6" id="equip-detail">
+        <div class="widget-box">
+          <div class="widget-title"><span class="icon"><i class="icon-book"></i></span>
+            <h5>查看仪器详情</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>项目</th>
+                  <th>内容</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="taskStatus"><strong>仪器名</strong></td>
+                  <td class="taskStatus" id="current_equip_name"></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>编号</strong></td>
+                  <td class="taskStatus" id="current_equip_id"></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>型号规格</strong></td>
+                  <td class="taskStatus" id="current_type"></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>存放地点</strong></td>
+                  <td class="taskStatus" id="current_address"></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>仪器状态</strong></td>
+                  <td class="taskStatus" id="current_status"></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>功能描述</strong></td>
+                  <td class="taskStatus">
+                    <textarea style="width: 300px;height: 100px; overflow-x:hidden;" readonly="readonly" id="current_description"></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>需要的操作资格</strong></td>
+                  <td class="taskStatus" id="current_qualification"></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>是否需要审核操作资格</strong></td>
+                  <td class="taskStatus"><a id="current_check_qualification"></a></td>
+                </tr>
+                <tr>
+                  <td class="taskStatus"><strong>购入日期</strong></td>
+                  <td class="taskStatus" id="current_buy_date"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="widget-content">          
+            <button type="button" class="btn btn-success" id="btn-edit">编辑</button>
+            <button type="button" class="btn btn-danger" id="btn-delete">删除</button>
+          </div>
+          <!--div class="widget-content" id="show_qualification" style="display: none;">  
+            <button type="button" class="btn btn-primary" id="btn-check-in">导入具备仪器使用资格的学生学号</button>
+            <button type="button" class="btn btn-warning" id="btn-see">查看具备仪器使用资格的学生</button>
+          </div>
+          <div class="widget-content" id="check_qualification" style="display: none;">
+            <input type="text" style="width: 290px;" id="sno" placeholder="请输入拥有该仪器使用资格的学生学号"/>
+            <button type="button" class="btn btn-success" id="btn-check">提交</button>
+          </div-->
+        </div>
+      </div>
+
+      <!--更新仪器信息-->
+      <div class="span6" id="equip-update">
+        <div class="widget-box">
+
+          <div class="widget-title bg_lo"  data-target="#collapseG3-update"><span class="icon"> <i class="icon-edit"></i></span>  
+            <h5>更新仪器信息</h5>
+          </div>
+
+          <div class="widget-content nopadding" id="collapseG3-update">
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate_update" novalidate="novalidate">
+              <div class="control-group">
+                <label class="control-label">仪器名</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="equip_name" id="equip_name_update"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">编号</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="equip_id" id="equip_id_update"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">型号规格</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="type" id="type_update"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">存放地点</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="address" id="address_update"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">功能描述</label>
+                <div class="controls">
+                  <textarea class="span11" name="description" id="description_update" style="width: 300px;height: 100px; overflow-x:hidden;"></textarea >
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">需要的操作资格</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="qualification"  id="qualification_update"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">是否需要审核操作资格</label>
+                <div class="controls">
+                  <label><input type="radio" name="check" id="yes_update" value="是"/>是</label>
+                  <label><input type="radio" name="check" id="no_update" value="否"/>否</label>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">购入日期</label>
+                <div class="controls">
+                  <input type="date" style="width: 290px;" data-date-format="yyyy-mm-dd" name="buy_date" id="buy_date_update"/>            
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success" id="btn-submit-update">提交</button>
+                <button type="reset" class="btn btn-danger" id="btn-reset-update">取消</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--查看具备仪器使用资格的学生-->
+    <div class="row-fluid">
+      <div class="span6" id="student-qualification" style="display: none;">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-thumbs-up"></i></span>
+            <h5>具备仪器使用资格的学生</h5>
+          </div>
+          <div class="widget-content nopadding" id="student">
+            <!--table class="table table-bordered data-table" id="student">
+              <thead>
+                <tr>
+                  <th class="taskStatus">学号</th>
+                  <th class="taskStatus">姓名</th>
+                </tr>
+              </thead>
+              <tbody></tbody-->
+              <!--tbody id="student">
+              </tbody-->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--插入新仪器信息-->
+    <div class="row-fluid">    
+      <div class="span6" id="equip-insert">
+        <div class="widget-box">
+
+          <div class="widget-title bg_lo" data-toggle="collapse" data-target="#collapseG3"><span class="icon"> <i class="icon-chevron-down"></i></span>  
+            <h5>插入新仪器信息</h5>
+          </div>
+
+          <div class="widget-content nopadding updates collapse" id="collapseG3">
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate_insert" novalidate="novalidate">
+              <div class="control-group">
+                <label class="control-label">仪器名</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="equip_name" id="equip_name_insert" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">编号</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;" name="equip_id" id="equip_id_insert"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">型号规格</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;"  name="type" id="type_insert" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">存放地点</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;"  name="address" id="address_insert">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">功能描述</label>
+                <div class="controls">
+                  <textarea class="span11" name="description" id="description_insert" style="width: 300px;height: 100px; overflow-x:hidden;" ></textarea >
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">需要的操作资格</label>
+                <div class="controls">
+                  <input type="text" style="width: 290px;"  name="qualification" id="qualification_insert">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">是否需要审核操作资格</label>
+                <div class="controls" id="dq">
+                  <label><input type="radio" name="check" id="yes_insert" value="是"/>是</label>
+                  <label><input type="radio" name="check" id="no_insert" checked value="否"/>否</label>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">购入日期</label>
+                <div class="controls">
+                  <!--div class="input-append date datepicker"-->
+                    <input type="date" style="width: 290px;"  data-date-format="yyyy-mm-dd" name="buy_date" id="buy_date_insert">
+                  <!--/div-->
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success" id="btn-submit-insert">提交</button>
+                <button type="reset" class="btn btn-primary" id="btn-reset-insert">清空</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Footer-part-->
+<div class="row-fluid">
+  <div id="footer" class="span12">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>
+</div>
+<!--end-Footer-part-->
+<script src="/static/js/jquery.min.js"></script> 
+<script src="/static/js/jquery.ui.custom.js"></script> 
+<script src="/static/js/bootstrap.min.js"></script> 
+<script src="/static/js/jquery.uniform.js"></script> 
+<script src="/static/js/select2.min.js"></script> 
+<script src="/static/js/jquery.dataTables.min.js"></script> 
+<script src="/static/js/matrix.js"></script> 
+<script src="/static/js/matrix.tables.js"></script>
+
+<script src="/static/js/jquery.validate.js"></script> 
+<script src="/static/js/matrix.form_validation.js"></script>
+
+<script src="/static/events-equip/manage-equip.js"></script>
+
+</body>
+</html>

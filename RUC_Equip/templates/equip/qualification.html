@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>具备仪器使用资格的学生</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/css/select2.css" />
+<link rel="stylesheet" href="/static/css/matrix-style.css" />
+<link rel="stylesheet" href="/static/css/matrix-media.css" />
+<link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<!--具备仪器使用资格的学生-->
+<div class="row-fluid">
+  <div class="span6">
+    <div class="widget-box">
+      <div class="widget-title"> <span class="icon"><i class="icon-thumbs-up"></i></span>
+        <h5>具备仪器 {{equip_id}} 使用资格的学生</h5>
+      </div>
+      <div class="widget-content nopadding">
+        <table class="table table-bordered data-table">
+          <thead>
+            <tr>
+              <th>学号</th>
+              <th>姓名</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in student %}
+            <tr>
+              <td class="taskStatus">{{s.userid}}</td>
+              <td class="taskStatus">{{s.name}}</td>
+              <td class="taskStatus">
+                <button type="button" class="btn btn-danger btn-mini btn-withdraw" equip_id="{{equip_id}}" sno="{{s.userid}}">撤销资格</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="widget-content" id="check_qualification">
+        <input type="text" style="width: 290px;" id="sno" placeholder="导入拥有该仪器使用资格的学生学号"/>
+        <button type="button" class="btn btn-success" id="btn-check" equip_id="{{equip_id}}">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--end-Footer-part-->
+<script src="/static/js/jquery.min.js"></script> 
+<script src="/static/js/jquery.ui.custom.js"></script> 
+<script src="/static/js/bootstrap.min.js"></script> 
+<script src="/static/js/jquery.uniform.js"></script> 
+<script src="/static/js/select2.min.js"></script> 
+<script src="/static/js/jquery.dataTables.min.js"></script> 
+<script src="/static/js/matrix.js"></script> 
+<script src="/static/js/matrix.tables.js"></script>
+
+<script src="/static/js/jquery.validate.js"></script> 
+<script src="/static/js/matrix.form_validation.js"></script>
+
+<script src="/static/events-equip/manage-equip.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,534 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>仪器预约记录</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="{%static 'css/bootstrap.min.css'%}" />
+<link rel="stylesheet" href="{%static 'css/bootstrap-responsive.min.css'%}" />
+<link rel="stylesheet" href="{%static 'css/matrix-style.css'%}" />
+<link rel="stylesheet" href="{%static 'css/matrix-media.css'%}" />
+<link rel="stylesheet" href="{%static 'css/uniform.css' %}" />
+<link rel="stylesheet" href="{%static 'css/select2.css' %}" />
+<link href="{%static 'font-awesome/css/font-awesome.css'%}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{%static 'css/dialog.css'%}">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div id="header">
+  <h1><a href="dashboard.html">MatAdmin</a></h1>
+</div>
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎Admin</span><b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="/stu_personal/"><i class="icon-user"></i> 我的资料</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout/"><i class="icon-key"></i> 退出</a></li>
+      </ul>
+    </li>
+    <li class=""><a title="" href="/logout/"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+  </ul>
+</div>
+
+
+<!--sidebar-menu-->
+<div id="sidebar"> <a href="#" class="visible-phone"><i class="icon icon-inbox"></i> Logs </a>
+  <ul>
+    <li><a href="/student/"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+<!--    <li> <a href="/groups/"><i class="icon icon-inbox"></i> <span>我的课题组</span></a> </li>-->
+    <li><a href="/stu_query_instru/"><i class="icon icon-th"></i> <span>仪器预约 & 查询</span></a></li>
+    <li  class="active"><a href="#"><i class="icon icon-th-list"></i> <span>预约记录</span> </a></li>
+    <li><a href="/logs/"><i class="icon icon-pencil"></i> <span>实验日志</span></a></li>
+  </ul>
+</div>
+<!--sidebar-menu-->
+
+<!--main-container-part-->
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/student/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">预约记录</a> </div>
+    <h1>我的预约</h1>
+  </div>
+  <div class="container-fluid">
+    <hr>
+      <div class="row-fluid">
+          <div class="span12">
+              <div class="widget-box">
+              <div class="widget-title"> <span class="icon"><i class="icon-th" style="color:black;"></i></span>
+                <h5 style="FONT-SIZE: 15px; color:black; ">仪器预约日志</h5>
+              </div>
+              <div class="widget-content nopadding">
+                <table class="table table-bordered data-table" >
+                  <thead>
+                    <tr>
+                      <th>预约单号</th>
+                      <th>仪器名称</th>
+                      <th>使用时间</th>
+                      <th>课题组编号</th>
+                      <th>实验内容概述</th>
+                      <th>预约状态</th>
+                      <th>选项</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for log in res_log %}
+                      <tr class="gradeX">
+                      <td style="text-align:center;">{{log.appointment_id}}</td>
+                      <td><p align="center"> {{log.equip_name}} </p></td>
+                      <td >
+                          <p style="text-align:center;">开始：{{log.start_time}}</p>
+                          <p style="text-align:center;">结束：{{log.end_time}}</p>
+                      </td>
+                      <td style="text-align:center;"> {{log.course_id}} </td>
+                      <td ><p align="center"> {{log.item}} </p> </td>
+                      {% if log.status == '2' %}
+                      <td class="taskStatus"  style="text-align:center;"><span class="label label-success">审核通过</span></td>
+                      <td style="text-align:center;"><button class="btn btn-mini" id="openDialog{{forloop.counter}}"> 流程跟踪 </button><sapn> </sapn><a class="btn btn-mini" id="cancel{{forloop.counter}}" val="{{forloop.counter}}"> 撤销 </a></td>
+                      {% elif log.status == '1' %}
+                      <td class="taskStatus"  style="text-align:center;"><span class="label label-info">审核中</span></td>
+                      <td style="text-align:center;"><button class="btn btn-mini" id="openDialog{{forloop.counter}}"> 流程跟踪 </button><sapn> </sapn><a class="btn btn-mini" id="cancel{{forloop.counter}}" val="{{forloop.counter}}"> 撤销 </a></td>
+                      {% elif log.status == '0' %}
+                      <td class="taskStatus"  style="text-align:center;"><span class="label label-info">审核中</span></td>
+                      <td style="text-align:center;"><button class="btn btn-mini" id="openDialog{{forloop.counter}}"> 流程跟踪 </button><sapn> </sapn><a class="btn btn-mini"  id="cancel{{forloop.counter}}" val="{{forloop.counter}}"> 撤销 </a></td>
+                      {% elif log.status == '-1' %}
+                      <td class="taskStatus"  style="text-align:center;"><span class="label label-important">预约失败</span></td>
+                      <td style="text-align:center;"><button class="btn btn-mini" id="teacher_error{{forloop.counter}}"> 详情 </button><sapn> </sapn><a class="btn btn-mini"  id="cancel{{forloop.counter}}"  val="{{forloop.counter}}"> 撤销 </a></td>
+                      {% elif log.status == '-2' %}
+                      <td class="taskStatus"  style="text-align:center;"><span class="label label-important">预约失败</span></td>
+                      <td style="text-align:center;"><button class="btn btn-mini" id="manager_error{{forloop.counter}}"> 详情 </button><sapn> </sapn><a class="btn btn-mini"  id="cancel{{forloop.counter}}" val="{{forloop.counter}}"> 撤销 </a></td>
+                      {% elif log.status == '-3' %}
+                      <td class="taskStatus"  style="text-align:center;"><span class="label label-warning">仪器故障</span></td>
+                      <td style="text-align:center;"><button class="btn btn-mini" id="equip_error{{forloop.counter}}"> 详情 </button><sapn> </sapn><a class="btn btn-mini"  id="cancel{{forloop.counter}}" val="{{forloop.counter}}"> 撤销 </a></td>
+                      {% endif %}
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <div class="row-fluid">
+          <div class="span12">
+              <div class="widget-box">
+              <div class="widget-title"> <span class="icon"><i class="icon-th" style="color:black;"></i></span>
+                <h5 style="FONT-SIZE: 15px; color:black; ">预约撤销记录</h5>
+              </div>
+              <div class="widget-content nopadding">
+                <table class="table table-bordered data-table" >
+                  <thead>
+                    <tr>
+                      <th>预约单号</th>
+                      <th>仪器名称</th>
+                      <th>使用时间</th>
+                      <th>课题组编号</th>
+                      <th>实验内容概述</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for log in cancel_res_log %}
+                    <tr class="gradeX">
+                      <td style="text-align:center;">{{log.appointment_id}}</td>
+                      <td><p align="center"> {{log.equip_name}} </p></td>
+                      <td >
+                          <p align="center">开始：{{log.start_time}}</p>
+                          <p align="center">结束：{{log.end_time}}</p>
+                      </td>
+                      <td style="text-align:center;"> {{log.course_id}} </td>
+                      <td ><p align="center">{{log.item}} </p> </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+      </div>
+    <hr>
+  </div>
+</div>
+
+<!--main-container-part-->
+
+<!--以下顺序不可变-->
+<script src="{%static 'js/jquery.min.js'%}"></script>
+<script src="{%static 'js/jquery.ui.custom.js'%}"></script>
+<script src="{%static 'js/bootstrap.min.js'%}"></script>
+<script src="{%static 'js/jquery.ui.custom.js'%}"></script>
+<script src="{%static 'js/matrix.js'%}"></script>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<!--<script src="{%static 'js/dialog/dialog.min.js'%}" type="text/javascript" charset="utf-8"></script>-->
+
+<script type="text/javascript">
+var stepBar = {
+    bar : {},
+    item : {},
+    barWidth : 0,
+    itemCount : 2,
+    itemWidth : 0,
+    processWidth : 0,
+    curProcessWidth : 0,
+    step : 1,
+    curStep : 0,
+    triggerStep : 1,
+    change : false,
+    animation : true,
+    speed : 800,
+    stepEasingForward : "easeOutCubic",
+    stepEasingBackward : "easeOutElastic",
+
+    init : function(id, option){
+        if (typeof id == "object" || id.indexOf("#") == 0) {
+            this.bar = $(id);
+        } else {
+            if (id.indexOf(".") == 0) {
+                id = id.substring(1, id.length);
+            }
+            this.bar = $("#" + id);
+        }
+        this.change = option.change ? true : false;
+        this.animation = this.change && option.animation ? true : false;
+        this.layout();
+        this.item = this.bar.find(".ui-stepInfo");
+        if (this.item.length < 2) {
+            return;
+        }
+        this.bar.show();
+        this.itemCount = this.item.length;
+        this.step = !isNaN(option.step) && option.step <= this.itemCount && option.step > 0 ? option.step : 1;
+        this.triggerStep = this.step;
+        if (!isNaN(option.speed) && option.speed > 0) {
+            this.speed = parseInt(option.speed);
+        }
+        this.stepEasing(option.stepEasingForward, false);
+        this.stepEasing(option.stepEasingBackward, true);
+        this.stepInfoWidthFun();
+    },
+    stepEasing : function(stepEasing, backward){
+        if(typeof jQuery.easing[stepEasing] === "function"){
+            if(backward){
+                this.stepEasingBackward = stepEasing;
+            } else {
+                this.stepEasingForward = stepEasing;
+            }
+        }
+    },
+    layout : function(){
+        this.bar.find(".ui-stepInfo .ui-stepSequence").addClass("judge-stepSequence-hind");
+        this.bar.find(".ui-stepInfo:first-child .ui-stepSequence").addClass("judge-stepSequence-pre");
+    },
+    classHover : function(){
+        if(this.change){
+            this.bar.find(".ui-stepInfo .judge-stepSequence-pre").removeClass("judge-stepSequence-hind-change").addClass("judge-stepSequence-pre-change");
+            this.bar.find(".ui-stepInfo .judge-stepSequence-hind").removeClass("judge-stepSequence-pre-change").addClass("judge-stepSequence-hind-change");
+        }
+    },
+    stepInfoWidthFun : function(){
+        if(this.itemCount > 0){
+            this.barWidth = this.bar.width();
+            this.itemWidth = Math.floor((this.barWidth * 0.9) / (this.itemCount - 1));
+            this.bar.find(".ui-stepLayout").width(Math.floor(this.barWidth * 0.9 + this.itemWidth));
+            this.item.width(this.itemWidth);
+            this.bar.find(".ui-stepLayout").css({"margin-left": -Math.floor(this.itemWidth / 2) + 10 });
+            if(this.change){
+                this._event();
+            }
+            this.percent();
+        }
+    },
+    _event : function(){
+        var _this = this;
+        _this.bar.on("click", ".ui-stepSequence", function(){
+            var triggerStep = $(this).text();
+            if(!isNaN(parseInt(triggerStep)) && triggerStep > 0 && triggerStep <= _this.itemCount && triggerStep != _this.curStep){
+                _this.triggerStep = triggerStep;
+                _this.percent();
+            }
+        });
+    },
+    percent : function(){
+        var _this = this;
+        var calc = 100 / (_this.itemCount - 1);
+        _this.processWidth = calc * (_this.triggerStep - 1) + "%";
+        if(_this.animation){
+            if(_this.triggerStep < _this.curStep){
+                 _this._animate();
+                 _this.curStep--;
+            } else {
+                 _this.curStep++;
+            }
+            _this.curProcessWidth = calc * (_this.curStep - 1) + "%";
+            _this.bar.find(".ui-stepProcess").stop(true).animate({"width" : _this.curProcessWidth}, _this.speed, function(){
+                _this._animate();
+                if(_this.processWidth != _this.curProcessWidth){
+                    _this.percent();
+                }
+            });
+        } else {
+            if(_this.curProcessWidth != _this.processWidth){
+                _this.curProcessWidth = _this.processWidth;
+                _this.bar.find(".ui-stepProcess").width(_this.processWidth);
+                _this.jump();
+            }
+        }
+    },
+    jump : function(){
+        this.bar.find(".ui-stepInfo .ui-stepSequence").removeClass("judge-stepSequence-pre").addClass("judge-stepSequence-hind");
+        this.bar.find(".ui-stepInfo:nth-child(-n+" + this.triggerStep + ") .ui-stepSequence").removeClass("judge-stepSequence-hind").addClass("judge-stepSequence-pre");
+        this.classHover();
+    },
+    _animate : function(){
+        var stepSequence_size = {},
+            easing = this.stepEasingBackward,
+            preClass,
+            hindClass;
+
+        if(this.triggerStep < this.curStep){
+            stepSequence_size.padding = "6px 10px";
+            preClass = "judge-stepSequence-pre";
+            hindClass = "judge-stepSequence-hind";
+            easing = this.stepEasingForward;
+        } else {
+            stepSequence_size.padding = "8px 12px";
+            preClass = "judge-stepSequence-hind";
+            hindClass = "judge-stepSequence-pre";
+        }
+        this.bar.find(".ui-stepInfo:nth-child(" + this.curStep + ") .ui-stepSequence").removeClass(preClass).addClass(hindClass);
+        this.bar.find(".ui-stepInfo:nth-child(" + this.curStep + ") .ui-stepSequence").animate(stepSequence_size, 500, easing);
+        this.classHover();
+    }
+};
+
+</script>
+
+<script type="text/javascript">
+"use strict";
+$.fn.dialog=function(options){
+    var id=options.id,
+    _options$title=options.title,
+    title=_options$title===void 0?"我的标题":_options$title,
+    _options$type=options.type,
+    type=_options$type===void 0?0:_options$type,
+    _options$easyClose=options.easyClose,
+    easyClose=_options$easyClose===void 0?false:_options$easyClose,
+    form=options.form,
+    _options$submit=options.submit,
+    submit=_options$submit===void 0?noSubmitFunc:_options$submit,
+    _options$afterInit=options.afterInit,
+    afterInit=_options$afterInit===void 0?noAfterInit:_options$afterInit;
+
+    checkValue(id,form);
+    init(id,title,type,form);
+    afterInit();
+
+    $(this).bind("click",{id:id},function(event){
+        openDialog(event.data.id)
+    });
+    $("#"+id+" .btnCancel").bind("click",{id:id},function(event){
+        closeDialog(event.data.id)
+    });
+
+    if(easyClose===true){
+        $("."+"black_overlay").bind("click",{id:id},function(event){
+            closeDialog(event.data.id)
+        })
+    }
+
+    $("#"+id+" .btnConfirm").bind("click",{id:id},function(event){
+        var data=serilizeToJSON($("#"+id+" form"));
+        submit(data);
+        closeDialog(event.data.id)
+    })
+};
+
+function init(id,title,type,form){
+    var before='\n\t\t<div id="'.concat(id,'" class="box white_content">\n\t\t\t<h4 class="font_title">').concat(title,'</h4>\n\t\t\t<form class="form_submit">\n\t');
+    var core="";
+    if(type===0){
+        for(var i=0;i<form.length;i++){
+            var temp="<div>\n\t\t\t\t<font>".concat(form[i].description,'\uFF1A</font>\n\t\t\t\t<span class="textInsert">\n\t\t\t\t\t<input type="').concat(form[i].type,'" name="').concat(form[i].name,'" value="').concat(form[i].value||"",'"/>\n\t\t\t\t</span>\n\t\t\t\t</div>\n\t\t\t\t');
+            core+=temp
+        }
+    }
+    var after="";
+    if(type===0){
+        after='<div>\n\t\t\t<p style="font-size:18px; color:black;"><i class="icon-wrench" style="color:red;"></i><span> </span>仪器故障，正在检修<span> </span><i class="icon-wrench" style="color:red;"></i></p>\n\t\t\t</div>\n\t\t\t</form>\n\t\t\t<div class="bottom_btn" style="padding-left:20px;">\n\t\t\t\t<button type="button" class="btnCancel btn" style="margin-left: 50px">\u5173\u95ED</button>\n\t\t\t</div>\n\t\t\t\n\t\t</div>\n\t\t<div class="black_overlay fade"></div> '
+    }
+    else if(type == 1){
+        var core = '<div id="stepBar'+id.substring(6)+'" class="ui-stepBar-wrap">\n\t\t\t<div class="ui-stepBar">\n\t\t\t\t<div class="ui-stepProcess"></div>\n\t\t\t</div>\n\t\t\t<div class="ui-stepInfo-wrap">\n\t\t\t\t<table class="ui-stepLayout" border="0" cellpadding="0" cellspacing="0">\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td class="ui-stepInfo" >\n\t\t\t\t\t\t\t<a class="ui-stepSequence">1</a>\n\t\t\t\t\t\t<p class="ui-stepName" style="text-align:left;">提交预约申请</p>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td class="ui-stepInfo">\n\t\t\t\t\t\t<a class="ui-stepSequence"  style="margin-left: 225px;">2</a>\n\t\t\t\t\t\t<p class="ui-stepName" style="margin-left: 180px;">教师审核通过</p>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td class="ui-stepInfo">\n\t\t\t\t\t\t<a class="ui-stepSequence" style="margin-left: 450px;">3</a>\n\t\t\t\t\t\t<p class="ui-stepName" style="margin-left: 360px;text-align:right;"> 仪器管理员审核通过 </p>\n\t\t\t\t\t</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</table>\n\t\t\t</div>\n\t\t\t</div>'
+        after='\n\t\t\t</form>\n\t\t\t<div class="bottom_btn" style="padding-left:20px;">\n\t\t\t\t<button type="button" class="btnCancel btn" style="margin-left: 50px;">\u5173\u95ED</button>\n\t\t\t</div>\n\t\t\t\n\t\t</div>\n\t\t<div class="black_overlay fade"></div> '
+    }
+    else if(type == 2){
+        after='<div>\n\t\t\t<p style="font-size:18px; color:black;">未通过教师审批，请核对您的使用权限</p>\n\t\t\t</div>\n\t\t\t</form>\n\t\t\t<div class="bottom_btn" style="padding-left:20px;">\n\t\t\t\t<button type="button" class="btnCancel btn" style="margin-left: 50px">\u5173\u95ED</button>\n\t\t\t</div>\n\t\t\t\n\t\t</div>\n\t\t<div class="black_overlay fade"></div> '
+    }
+    else{
+        after='<div>\n\t\t\t<p style="font-size:18px; color:black;">未通过仪器管理员审批，请核对您的使用权限</p>\n\t\t\t</div>\n\t\t\t</form>\n\t\t\t<div class="bottom_btn" style="padding-left:20px;">\n\t\t\t\t<button type="button" class="btnCancel btn" style="margin-left: 50px">\u5173\u95ED</button>\n\t\t\t</div>\n\t\t\t\n\t\t</div>\n\t\t<div class="black_overlay fade"></div> '
+    }
+    var str=before+core+after;
+    var element=document.createElement("div");
+    element.innerHTML=str;
+    $("body")[0].appendChild(element)
+}
+
+function openDialog(id){
+    var element="#"+id;
+    $(element)[0].style.display="block";
+    $(element).next()[0].style.display="block"
+}
+function closeDialog(id){
+    var element="#"+id;
+    $(element)[0].style.display="none";
+    $(element).next()[0].style.display="none"
+}
+function isEmpty(obj){
+    if(typeof obj=="undefined"||obj==null||obj==""){
+        return true
+    }
+    else{return false}
+}
+function serilizeToJSON(form){
+    var result={};
+    var arr=form.serializeArray();
+    arr.forEach(function(item){
+        result[item.name]=item.value
+    });
+    return result
+}
+function checkValue(id,form){
+    if(isEmpty(id)){
+        try{
+            throw new Error("你必须初始化时设定id的值")
+        }
+        catch(e){
+            console.error(e.name+": "+e.message)
+        }
+    }
+    if(typeof id!=="string"){
+        try{
+            throw new Error("id的值的数据类型必须是字符串")
+        }
+        catch(e)
+        {
+            console.error(e.name+": "+e.message)
+        }
+    }
+
+}
+
+function clearAllData(id){
+    var obj=$("#"+id+" form input");
+    for(var i=0;i<obj.length;i++){
+        obj[i].value=""
+    }
+}
+
+function moveBtn(id,height){
+    var obj=$("#"+id+" .bottom_btn")[0];
+    obj.style.top=""+height+"px"
+}
+
+function noSubmitFunc(){
+    console.log("您初始化时没有设置submit参数!!!")
+}
+
+function noAfterInit(){};
+
+</script>
+
+<script type="text/javascript">
+            {% for log in res_log %}
+                {% if log.status == '0' or log.status == '1' or log.status == '2' %}
+                    $("#openDialog{{forloop.counter}}").dialog({
+                        id: "dialog{{forloop.counter}}", //必填,必须和已有id不同
+                        title: "审核流程", //对话框的标题 默认值: 我的标题
+                        type: 1, //0 对话框有确认按钮和取消按钮 1 对话框只有关闭按钮且包含流程图
+                        form: [], //form 是填充表单的数据,必填
+                    });
+                {% elif log.status == '-3' %}
+                    $("#equip_error{{forloop.counter}}").dialog({
+                        id: "dialog_equip_error{{forloop.counter}}",
+                        title: "预约失败详情",
+                        type: 0,
+                        form: [],
+                    });
+                {% elif log.status == '-1' %}
+                    $("#teacher_error{{forloop.counter}}").dialog({
+                        id: "dialog_equip_error{{forloop.counter}}",
+                        title: "预约失败详情",
+                        type: 2,
+                        form: [],
+                    });
+                {% elif log.status == '-2' %}
+                    $("#manager_error{{forloop.counter}}").dialog({
+                        id: "dialog_equip_error{{forloop.counter}}",
+                        title: "预约失败详情",
+                        type: 3,
+                        form: [],
+                    });
+                {% endif %}
+			{% endfor %}
+	</script>
+<script type="text/javascript" src="{%static 'js/student/stepbar/jquery-1.8.2.js'%}"></script>
+<script type="text/javascript" src="{%static 'js/student/stepbar/jquery.easing.1.3.js'%}"></script>
+<!--<script type="text/javascript" src="{%static 'js/stepbar/stepBar.js'%}"></script>-->
+<script type="text/javascript">
+
+$(function(){
+    {% for log in res_log %}
+        {% if log.status == '0' or log.status == '1' or log.status == '2' %}
+            var stepbar =Object.assign({}, stepBar);  // 深拷贝
+            stepbar.init("stepBar{{forloop.counter}}", {
+                step : {{log.status}} + 1,
+                change : true,
+                animation : true
+            });
+        {% endif %}
+	{% endfor %}
+});
+</script>
+<script>
+  $(function () {
+     {% for log in res_log %}
+            $("#cancel{{forloop.counter}}").on("click", function(){
+                var statu = confirm("请再次确认是否撤销预约");
+                if(statu){
+                    $.ajax({
+                      type:"POST",
+                      url:"/cancel_res/",
+                      data:{
+                         csrfmiddlewaretoken: '{{ csrf_token }}',
+                         index_id: {{log.appointment_id}}
+                       },
+                      success:function(result){
+                        setTimeout(function() {
+                          location.reload();
+                        }, 1 * 2000);
+                      },
+                      error:function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                      }
+                    })
+                }
+            });
+    {% endfor %}
+
+  });
+
+
+</script>
+<script src="{%static 'js/matrix.tables.js'%}"></script>
+<script src="{%static 'js/jquery.uniform.js'%}"></script>
+<script src="{%static 'js/select2.min.js'%}"></script>
+<script src="{%static 'js/jquery.dataTables.min.js'%}"></script>
+</body>
+</html>

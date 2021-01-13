@@ -1,0 +1,239 @@
+{% load static %}
+<!--课题组学员展示需要一个edit表，仪器查询以及日志查询需要一个dynamic表-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>课题组管理</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{%static 'css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{%static 'css/bootstrap-responsive.min.css' %}" />
+<link rel="stylesheet" href="{%static 'css/matrix-style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/matrix-media.css' %}" />
+<link rel="stylesheet" href="{%static 'css/jquery.gritter.css' %}" />
+  <link href="{%static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">MatAdmin</a></h1>
+</div>
+<!--close-Header-part-->
+
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="dropdown" id="profile-messages" ><a title="中国人民大学" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">老师</span><b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="/teacher/TeacherPersonal/"><i class="icon-user"></i> 我的资料</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout/"><i class="icon-key"></i> 退出</a></li>
+      </ul>
+    </li>
+    <li class=""><a title="" href="/logout/"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+  </ul>
+</div>
+
+<!--sidebar-menu-->
+<div id="sidebar"> <a href="#" class="visible-phone"><i class="icon icon-file"></i> Addons</a>
+ <ul>
+    <li ><a href="/teacher/Teacher/"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+    <li class="active"> <a href="/teacher/CourseManage"><i class="icon icon-group"></i> <span>课题组管理</span></a> </li>
+    <li> <a href="/teacher/Check/"><i class="icon icon-edit"></i> <span>仪器预约审批</span></a> </li>
+    <li><a href="/teacher/QueryInstru/"><i class="icon icon-search"></i> <span>仪器查询</span></a></li>
+    <li><a href="/teacher/QueryLog/"><i class="icon icon-filter"></i> <span>仪器使用日志查询</span></a></li>
+
+
+  </ul>
+</div>
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>  <a href="#" class="current">课题组管理</a> </div>
+  </div>
+  <div class="container-fluid"><hr>
+    <div class="row-fluid">
+      <div class="span12">
+<!--        <div class="widget-box">-->
+          <div class="widget-title"> <span class="icon"> <i class="icon-group"></i> </span>
+            {%for t in teacher%}
+            <h5 >{{t.course_name}}</h5>
+            {%endfor%}
+          </div>
+          <div class="widget-content">
+            <div class="row-fluid">
+
+              <div class="span12">
+                <table class="table table-bordered table-invoice">
+                  <tbody>
+                  {%for t in teacher%}
+                    <tr>
+                    <tr>
+                      <td  >课题组编号：</td>
+                      <td class="width90"><strong>{{t.course_id}}</strong></td>
+                    </tr>
+                  <tr>
+                      <td  >导师：</td>
+                      <td class="width90"><strong>{{t.teacher_name}}</strong></td>
+                    </tr>
+                  <tr>
+                      <td  >联系邮箱：</td>
+                      <td class="width90"><strong>{{t.email}}</strong></td>
+                    </tr>
+                  <td class="width10">课题详情：</td>
+                    <td class="width90"><strong>{{t.details}}</strong></td>
+                  </tr>
+                  {% endfor%}
+                    </tbody>
+
+                </table>
+              </div>
+
+            </div>
+            <div class="row-fluid">
+              <div class="span12">
+                <table class="table table-bordered table-invoice-full">
+                  <thead>
+                    <tr>
+                      <th >姓名</th>
+                      <th >学号</th>
+                      <th >年级</th>
+                      <th>邮箱</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {%for s in student %}
+                    <tr>
+                      <td>{{s.student_name}}</td>
+                      <td>{{s.student_id}}</td>
+                      <td>{{s.session}}</td>
+                      <td>{{s.student_email}}</td>
+                      <td>
+                        <button type="button" class="btn btn-primary btn-delete_student" sno="{{s.student_id}}">删除</button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!--添加新成员信息-->
+                <div class="container-fluid">
+              <hr>
+              <div class="row-fluid">
+                <div class="span8">
+                  <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-plus"></i> </span>
+                      <h5>添加成员</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                      <form action="#" method="get" class="form-horizontal">
+
+                    <div class="control-group">
+                      <label class="control-label">姓名：</label>
+                      <div class="controls">
+                        <input type="text" class="span6" placeholder="姓名" id="sname" />
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label">学号：</label>
+                      <div class="controls">
+                        <input type="text" class="span6" placeholder="学号"  id="sno"/>
+                      </div>
+                    </div>
+
+                    <div class="form-actions">
+                      <button type="button" class="btn btn-success btn-add_student">添加</button>
+                    </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+                </div>
+              </div>
+            </div>
+<!--          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Footer-part-->
+<div class="row-fluid">
+  <div id="footer" class="span12">2020 RUC_Equipemt<a target="_blank" ></a> </div>
+</div>
+<!--end-Footer-part-->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.custom.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/matrix.js' %}"></script>
+
+<!--删除学生按钮-->
+<script>
+    $(".btn-delete_student").click(function(){
+      _sno= $(this).attr("sno")
+      var r = confirm("确认删除该学生信息？")
+      if (r){
+        $.ajax({
+          type:"GET",
+          contentType:"application/json;charset=UTF-8",
+          url:"/teacher/DeleteStudentFromCourse/",
+          data:{sno:_sno},
+          success:function(result){
+            console.log("success!")
+            console.log(result)
+            alert("删除成功！")
+            setTimeout(function() {
+              location.reload();
+            }, 1 * 2000);
+          },
+          error:function(e){
+            console.log(e.status);
+            console.log(e.responseText);
+          }
+        })
+      }
+    })
+  </script>
+
+<!--添加学生save-->
+
+<script>
+    $(".btn-add_student").click(function(){
+    var _sno = $('#sno').val();
+    var _sname = $('#sname').val();
+      $.ajax({
+        type:"GET",
+        contentType:"application/json;charset=UTF-8",
+        url:"/teacher/AddStudentToCourse/",
+        data:{sname:_sname, sno:_sno},
+
+        success:function(result){
+          console.log("success!")
+          console.log(result)
+          if(result.status ==1)
+            alert("添加成功")
+           else
+            alert("添加失败，请确认学生信息！")
+          setTimeout(function() {
+            location.reload();
+          }, 1 * 2000);
+        },
+        error:function(e){
+          console.log(e.status);
+          console.log(e.responseText);
+          alert("添加失败，请重新确定学生信息！")
+        }
+      })
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--表示本网页是英文网页-en表示English，中文则使用zh-->
+
+<head>
+        <title>注册页面</title>
+		<meta charset="UTF-8" />
+        <meta charset="UTF-8">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--字符集-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--全屏-->
+
+        <link rel="stylesheet" href="/static/css/bootstrap-login.min.css" />
+		<link rel="stylesheet" href="/static/css/bootstrap-responsive-login.min.css" />
+        <link rel="stylesheet" href="/static/css/matrix-login.css" />
+        <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'/>
+
+    <!--引用的样式表-->
+
+	<style type="text/css">
+		body{background: url("/static/images/logo.jpg");}
+		.box{background:white;}
+	</style>
+    </head>
+    <body>
+        <div id="loginbox">
+            <form id="loginform" class="form-vertical" action="/register/" method="post">
+				 <div class="control-group normal_text"> <h3><img src="/static/img/register.png" alt="Logo" /></h3></div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="账号" name="userid" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" placeholder="密码" name="password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" placeholder="确认密码" name="check_password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="姓名" name="name" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="年级" name="session" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="性别" name="gender" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="邮箱" name="email" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <span class="pull-left"><a href="/Login/" class="flip-link btn btn-info" id="to-recover">已有账号？登录</a></span>
+                    <span class="pull-right"><button type="submit" class="btn btn-success" > 注册</button></span>
+                </div>
+            </form>
+            <form id="recoverform" action="#" class="form-vertical">
+				<p class="normal_text">请输入正确的用户名密码.</p>
+
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
+                        </div>
+                    </div>
+
+                <div class="form-actions">
+                    <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">&laquo; 返回登录</a></span>
+                    <span class="pull-right"><a class="btn btn-info"></a></span>
+                </div>
+            </form>
+        </div>
+
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/matrix.login.js"></script>
+    </body>
+
+
+</html>

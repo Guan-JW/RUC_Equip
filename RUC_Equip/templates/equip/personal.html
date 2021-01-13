@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>我的资料</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{% static 'css/bootstrap.min-login.css' %}" type="text/css"  />
+<link rel="stylesheet" href="{% static 'css/bootstrap-responsive-login.min.css' %} " type="text/css"/>
+<link rel="stylesheet" href="{% static 'css/matrix-style.css' %}" type="text/css"/>
+<link rel="stylesheet" href="{% static 'css/matrix-media.css' %}" type="text/css" />
+<link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
+    <script>
+        function check(){
+            var div = document.getElementById("div1");
+            div.innerHTML = "";
+            var password = div.value;
+            if (password == "") {
+                div.innerHTML = "<font color=red>密码不能为空！</font>";
+
+                return false;
+            }
+        }
+        function new_password(){
+            var div = document.getElementById("div2");
+            div.innerHTML = "";
+            var password = document.update_pwd.text2.value;
+            if (password == "") {
+                div.innerHTML = "<font color=red>密码不能为空！</font>";
+                document.update_pwd.text2.focus();
+                return false;
+            }
+            if (password.length < 4 || password.length > 12) {
+                div.innerHTML = "<font color=red>密码长度4-12位</font>";
+                document.update_pwd.text2.select();
+                return false;
+            }
+        }
+
+        function check_password(){
+            var div2 = document.getElementById("div2");
+            div2.innerHTML = "";
+            var password = div2.value;
+            //print(password)
+            var div3 = document.getElementById("div3");
+            div3.innerHTML = "";
+            var repass = div3.value;
+            if (repass == "") {
+                div3.innerHTML = "<font color=red>密码不能为空！</font>";
+                return false;
+            }
+            if (password.length < 4 || password.length > 12) {
+                div3.innerHTML = "<font color=red>密码长度4-12位</font>";
+                return false;
+            }
+            if (password != repass) {
+                div3.innerHTML = "<font color=red>输入密码和确认密码不一致</font>";
+                return false;
+            }
+        }
+    </script>
+
+
+</head>
+
+<style>
+.box{
+    width:50%; margin-top:10%; margin:auto; padding:28px;
+    height:220px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+}
+.box.show{display:block;}
+.box .x{ font-size:18px; text-align:right; display:block;}
+.box input{width:80%; font-size:18px; margin-top:18px;}
+</style>
+
+
+
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">仪器管理员</a></h1>
+</div>
+<!--close-Header-part-->
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">仪器管理员</span><b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="/equip/personal"><i class="icon-user"></i> 我的资料</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout"><i class="icon-key"></i> 退出</a></li>
+      </ul>
+    </li>
+    <li class=""><a title="" href="/logout"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+  </ul>
+</div>
+
+<!--sidebar-menu-->
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> 控制台</a>
+  <ul>
+    <li class="active"><a href="/equip/index"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+    <li><a href="/equip/widgets"><i class="icon icon-inbox"></i> <span>预约审批</span></a> </li>
+    <li><a href="/equip/tables"><i class="icon icon-th"></i> <span>我管理的仪器</span></a></li>
+    <li><a href="/equip/log"><i class="icon icon-th-list"></i> <span>仪器使用日志</span></a> </li>
+    <li><a href="/equip/query"><i class="icon icon-search"></i> <span>仪器查询</span></a></li>
+  </ul>
+</div>
+<!--sidebar-menu-->
+
+<!--main-container-part-->
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"><a href="/index" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>主页</a> <a href="#" class="current">我的资料</a> </div>
+    <h1>我的资料</h1>
+  </div>
+  <div class="container-fluid">
+
+    <div class="row-fluid">
+      <div class="span6">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
+            <h5>个人资料</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <ul class="recent-posts">
+              <li>
+                <div class="user-thumb"> <img style="float:right" width="100" height="80" alt="User" src="http://m.qpic.cn/psc?/V10nzDE31XLGqp/ruAMsa53pVQWN7FLK88i5iOm4crzSJ7d*zI7BPwNpxJn6OKTYEdy72Ngcy8vNwVddJTP2HOGpY1PX7EZ1LzCED3GF*uXyN*L2jX1Wo2KTS8!/mnull&bo=mwRwAQAAAAABB84!&rf=photolist&t=5"></div>
+                  <br>
+                <div class="article-post">
+
+           <!--       <div class="fr"><a href="#" class="btn btn-primary btn-mini">修改资料</a> <a href="#" class="btn btn-success btn-mini">提交</a></div>-->
+                    <span class="pull-right"><input type="button" onClick="msgbox(1)" value="修改密码"></span>
+
+                        <script>
+                        function msgbox(n){
+                            document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+                        }
+                        </script>
+
+                         <div id='inputbox' class="box">
+                             <form id="update_pwd" method="post" >
+                                <a class='x' href=''; onclick="msgbox(0); return false;">关闭</a>
+                                 <div  id = "div1" style="display:inline;">
+                                <input id = "text1" type="password" placeholder="请输入原始密码" name="old_password" />
+                                 </div>
+                                 <div id = "div2" style="display:inline;">
+                                 <input id = "text2" type="password" placeholder="请输入新密码" name="new_password" /><br>
+                                 </div>
+                                 <div id = "div3" style="display:inline;">
+                                 <input id = "text3" type="password" placeholder="再次确认新密码" name="check_password" onblur="check_password()"/><br>
+                                 </div>
+                                <button type="submit" class="btn btn-success">  确定  </button>
+
+                             </form>
+                         </div>
+                    <br><br>
+                    <span class="user-info"><h4> ID：  {{ info.manager_id }} </h4></span><br>
+                    <span class="user-info"><h4> 姓名：  {{ info.name }}</h4></span><br>
+                    <span class="user-info"><h4> 邮箱：  {{ info.email }}</h4></span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+<!--main-container-part-->
+
+
+
+<!--
+<div class="row-fluid">
+  <div id="footer" class="span12">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>
+</div>
+-->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.ui.custom.js"></script>
+<script src="/static/js/matrix.js"></script>
+
+</body>
+</html>
+
+
+

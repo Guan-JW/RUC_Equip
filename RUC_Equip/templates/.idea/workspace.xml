@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="db9fdac2-f164-4939-b9c4-60f74e71bb00" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1k6Z4Tlie6y59Ipukyw2T2QsvD3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="E:/learning/image_caption/a-PyTorch-Project-to-Image-Caption" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db9fdac2-f164-4939-b9c4-60f74e71bb00" name="Default Changelist" comment="" />
+      <created>1605022809592</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605022809592</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1605262358868">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1605262358868" />
+    <state x="324" y="164" key="com.intellij.ide.util.TipDialog" timestamp="1605607722267">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="324" y="164" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1605607722267" />
+    <state x="0" y="0" width="630" height="666" key="dock-window-1" timestamp="1605233014411">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="0" y="0" width="630" height="666" key="dock-window-1/0.0.1280.680@0.0.1280.680" timestamp="1605233014411" />
+    <state x="2" y="0" width="630" height="666" maximized="true" key="dock-window-2" timestamp="1605264189704">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="2" y="0" width="630" height="666" maximized="true" key="dock-window-2/0.0.1280.680@0.0.1280.680" timestamp="1605264189704" />
+    <state x="625" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1605265688308">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="625" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1605265688308" />
+  </component>
+</project>
